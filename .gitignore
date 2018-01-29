@@ -1,0 +1,8 @@
+boost 
+build 
+tmp 
+.vs 
+*.vcxproj.user
+*.o
+.vscode
+*.log 

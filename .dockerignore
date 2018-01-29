@@ -1,0 +1,5 @@
+boost
+build
+lib
+tmp
+**/.vs
