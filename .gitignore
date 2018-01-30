@@ -6,3 +6,7 @@ tmp
 *.o
 .vscode
 *.log 
+*.obj
+*.dll
+*.pdb
+*.exe

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef __COMMON_H__
+#define __COMMON_H__
+
 #include <boost/beast/http.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ssl.hpp>
@@ -16,3 +19,5 @@ typedef std::function<http::response<http::string_body>(const boost::shared_ptr<
 
 #define HTTP_11 11
 #define HTTP_USER_AGENT "CppWeb"
+
+#endif // __COMMON_H__

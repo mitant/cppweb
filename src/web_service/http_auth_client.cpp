@@ -5,7 +5,7 @@
 
 #include "common.h"
 #include "http_auth_client.h"
-#include "root_certificates.hpp"
+#include "root_certificates.h"
 
 http_auth_client::http_auth_client(
   const boost::shared_ptr<boost::asio::io_context>& ioc,

@@ -1,0 +1,26 @@
+# Use with nmake and x64 Native Tools Command Prompt for VS 2017
+# This Makefile was written for a Boost 1.66.0 built with the following options, --threading=multi --runtime-link=static runtime-debugging=on --variant=debug
+# OpenSSL 1.1.0g was built using NASM, VC-WIN64A
+LIB_PATH=C:/dev/libs
+INCLUDE_BOOST=$(LIB_PATH)/boost/boost_1_66_0
+INCLUDE_OPENSSL=$(LIB_PATH)/openssl/openssl_1_1_0g/include
+LIB_BOOST=$(LIB_PATH)/boost/boost_1_66_0/stage/lib
+LIB_OPENSSL=$(LIB_PATH)/openssl/openssl_1_1_0g/lib
+
+CXX=cl.exe
+CPPFLAGS=/EHsc /MTd /W4 -D_WIN32_WINNT=0x0601 -D_DEBUG -D_CONSOLE -DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE -D_CRT_SECURE_NO_WARNINGS
+INCLUDES=/I$(INCLUDE_BOOST) /I$(INCLUDE_OPENSSL)
+WINDOWS_LIBS=/DEFAULTLIB:advapi32.lib /DEFAULTLIB:User32.lib /DEFAULTLIB:crypt32.lib /DEFAULTLIB:WS2_32.LIB /DEFAULTLIB:GDI32.LIB /DEFAULTLIB:legacy_stdio_definitions.lib
+OPENSSL_LIBS=/DEFAULTLIB:$(LIB_OPENSSL)/libssl.lib /DEFAULTLIB:$(LIB_OPENSSL)/libcrypto.lib
+LIBS=/LIBPATH:$(LIB_BOOST) $(OPENSSL_LIBS) $(WINDOWS_LIBS)
+FILES= \
+	web_service.cpp \
+	listener.cpp \
+	http_session.cpp \
+	http_error_handlers.cpp \
+	http_path.cpp \
+	http_auth_client.cpp \
+	root_certificates.cpp
+
+web_service.exe: $(FILES)
+	$(CXX) $(CPPFLAGS) $(INCLUDES) $(FILES) /link $(LIBS) /SUBSYSTEM:console /out:web_service.exe

@@ -1,28 +1,7 @@
-//
-// Copyright (c) 2016-2017 Vinnie Falco (vinnie dot falco at gmail dot com)
-//
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
-// Official repository: https://github.com/boostorg/beast
-//
-
-#ifndef BOOST_BEAST_EXAMPLE_COMMON_ROOT_CERTIFICATES_HPP
-#define BOOST_BEAST_EXAMPLE_COMMON_ROOT_CERTIFICATES_HPP
-
-#include <boost/asio/ssl.hpp>
-#include <string>
-
-namespace ssl = boost::asio::ssl; // from <boost/asio/ssl.hpp>
+#include "root_certificates.h"
 
 namespace detail {
-
-  // The template argument is gratuituous, to
-  // allow the implementation to be header-only.
-  //
-  template<class = void>
-  void
-    load_root_certificates(ssl::context& ctx, boost::system::error_code& ec)
+  void load_root_certificates(ssl::context& ctx, boost::system::error_code& ec)
   {
     std::string const cert =
       /*  This is the DigiCert root certificate.
@@ -111,14 +90,12 @@ namespace detail {
   // like a "normal" function.
   //
 
-inline
 void
 load_root_certificates(ssl::context& ctx, boost::system::error_code& ec)
 {
   detail::load_root_certificates(ctx, ec);
 }
 
-inline
 void
 load_root_certificates(ssl::context& ctx)
 {
@@ -127,5 +104,3 @@ load_root_certificates(ssl::context& ctx)
   if (ec)
     throw boost::system::system_error{ ec };
 }
-
-#endif
