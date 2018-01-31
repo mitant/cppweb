@@ -1,9 +1,10 @@
 #include "root_certificates.h"
 
-namespace detail {
-  void load_root_certificates(ssl::context& ctx, boost::system::error_code& ec)
-  {
-    std::string const cert =
+namespace detail
+{
+void load_root_certificates(ssl::context &ctx, boost::system::error_code &ec)
+{
+  std::string const cert =
       /*  This is the DigiCert root certificate.
 
       CN = DigiCert High Assurance EV Root CA
@@ -71,36 +72,24 @@ namespace detail {
       "Yzi9RKR/5CYrCsSXaQ3pjOLAEFe4yHYSkVXySGnYvCoCWw9E1CAx2/S6cCZdkGCe\n"
       "vEsXCS+0yx5DaMkHJ8HSXPfqIbloEpw8nL+e/IBcm2PN7EeqJSdnoDfzAIJ9VNep\n"
       "+OkuE6N36B9K\n"
-      "-----END CERTIFICATE-----\n"
-      ;
+      "-----END CERTIFICATE-----\n";
 
-    ctx.add_certificate_authority(
+  ctx.add_certificate_authority(
       boost::asio::buffer(cert.data(), cert.size()), ec);
-    if (ec)
-      return;
-  }
+  if (ec)
+    return;
+}
+}
 
-} // detail
-
-  // Load the root certificates into an ssl::context
-  //
-  // This function is inline so that its easy to take
-  // the address and there's nothing weird like a
-  // gratuituous template argument; thus it appears
-  // like a "normal" function.
-  //
-
-void
-load_root_certificates(ssl::context& ctx, boost::system::error_code& ec)
+void load_root_certificates(ssl::context &ctx, boost::system::error_code &ec)
 {
   detail::load_root_certificates(ctx, ec);
 }
 
-void
-load_root_certificates(ssl::context& ctx)
+void load_root_certificates(ssl::context &ctx)
 {
   boost::system::error_code ec;
   detail::load_root_certificates(ctx, ec);
   if (ec)
-    throw boost::system::system_error{ ec };
+    throw boost::system::system_error{ec};
 }

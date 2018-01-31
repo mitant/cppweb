@@ -20,7 +20,9 @@ FILES= \
 	http_error_handlers.cpp \
 	http_path.cpp \
 	http_auth_client.cpp \
-	root_certificates.cpp
+	root_certificates.cpp \
+	routes.cpp \
+	main.cpp
 
 web_service.exe: $(FILES)
 	$(CXX) $(CPPFLAGS) $(INCLUDES) $(FILES) /link $(LIBS) /SUBSYSTEM:console /out:web_service.exe

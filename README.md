@@ -34,6 +34,7 @@ This is a very basic starter project but it does give you an interface to easily
 * An OAuth2 client that handles authentication and token management to other APIs.  
 * Some middleware framework to incorporate a database framework.
 * Adding some sort of authentication module to this framework so that callers could be authorized.
+* A real root certificate store implementation that fetches from the system.
 
 # License
 MIT License
