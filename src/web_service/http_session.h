@@ -111,7 +111,7 @@ class http_session : public std::enable_shared_from_this<http_session>
   boost::asio::strand<boost::asio::io_context::executor_type> strand_;
   boost::asio::steady_timer timer_;
   queue queue_;
-  boost::shared_ptr<boost::asio::io_context> ioc_;
+  boost::shared_ptr<web_service_context> ctx_;
 
   template <
       class Body, class Allocator,
@@ -124,7 +124,7 @@ class http_session : public std::enable_shared_from_this<http_session>
 public:
   // Take ownership of the socket
   explicit http_session(
-      const boost::shared_ptr<boost::asio::io_context>& ioc,
+      const boost::shared_ptr<web_service_context>& ctx,
       tcp::socket socket,
       std::function<void(boost::system::error_code, char const *)> error_handler,
       const std::map<std::string, RouteHandler> &route_handlers);

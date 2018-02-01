@@ -15,6 +15,7 @@ OPENSSL_LIBS=/DEFAULTLIB:$(LIB_OPENSSL)/libssl.lib /DEFAULTLIB:$(LIB_OPENSSL)/li
 LIBS=/LIBPATH:$(LIB_BOOST) $(OPENSSL_LIBS) $(WINDOWS_LIBS)
 FILES= \
 	web_service.cpp \
+	web_service_context.cpp \
 	listener.cpp \
 	http_session.cpp \
 	http_error_handlers.cpp \

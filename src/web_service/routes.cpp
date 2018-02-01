@@ -8,7 +8,7 @@
 
 namespace routes
 {
-http::response<http::string_body> livecheck_handler(const boost::shared_ptr<boost::asio::io_context> &ioc, QueryParameters queryParameters, const std::string &body)
+http::response<http::string_body> livecheck_handler(const boost::shared_ptr<web_service_context>& ctx, QueryParameters queryParameters, const std::string& body)
 {
   http::response<http::string_body> res;
   res.version(HTTP_11);
@@ -20,7 +20,7 @@ http::response<http::string_body> livecheck_handler(const boost::shared_ptr<boos
   return res;
 }
 
-http::response<http::string_body> api_client_handler(const boost::shared_ptr<boost::asio::io_context> &ioc, QueryParameters queryParameters, const std::string &body)
+http::response<http::string_body> api_client_handler(const boost::shared_ptr<web_service_context>& ctx, QueryParameters queryParameters, const std::string& body)
 {
   auto const host = "raw.githubusercontent.com";
   auto const port = "443";
@@ -29,7 +29,7 @@ http::response<http::string_body> api_client_handler(const boost::shared_ptr<boo
   std::string auth_header = "";
   auth_header += api_key;
 
-  http_auth_client client(ioc, host, port, auth_header);
+  http_auth_client client(ctx, host, port, auth_header);
 
   http::response<http::string_body> res;
   res.version(HTTP_11);

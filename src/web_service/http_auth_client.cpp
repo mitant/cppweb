@@ -8,11 +8,11 @@
 #include "root_certificates.h"
 
 http_auth_client::http_auth_client(
-  const boost::shared_ptr<boost::asio::io_context>& ioc,
+  const boost::shared_ptr<web_service_context>& ctx,
   const std::string& host,
   const std::string& port,
   const std::string& auth_header)
-: ioc_(ioc),
+: ctx_(ctx),
   host_(host),
   port_(port),
   auth_header_(auth_header)
@@ -25,8 +25,8 @@ http_auth_client::get(char const *target)
   ssl::context ctx{ ssl::context::sslv23_client };
   load_root_certificates(ctx);
 
-  tcp::resolver resolver{ *ioc_.get() };
-  ssl::stream<tcp::socket> stream{ *ioc_.get(), ctx };
+  tcp::resolver resolver{ *ctx_->get_ioc().get() };
+  ssl::stream<tcp::socket> stream{ *ctx_->get_ioc().get(), ctx };
 
   if (!SSL_set_tlsext_host_name(stream.native_handle(), host_.c_str()))
   {

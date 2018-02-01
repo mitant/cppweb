@@ -22,10 +22,10 @@ int main()
   unsigned short port = static_cast<unsigned short>(std::atoi(std::getenv("PORT")));
   int threads = std::max<int>(1, std::atoi(std::getenv("THREADS")));
 
-  boost::shared_ptr<boost::asio::io_context> ioc = boost::make_shared<boost::asio::io_context>(threads);
+  boost::shared_ptr<web_service_context> ctx = boost::make_shared<web_service_context>(threads);
 
   std::make_shared<web_service>(
-      ioc,
+      ctx,
       "0.0.0.0",
       port,
       "web_service")
@@ -36,10 +36,10 @@ int main()
   v.reserve(threads - 1);
   for (auto i = threads - 1; i > 0; --i)
     v.emplace_back(
-        [&ioc] {
-          ioc->run();
+        [&ctx] {
+          ctx->get_ioc()->run();
         });
-  ioc->run();
+  ctx->get_ioc()->run();
 
   return EXIT_SUCCESS;
 }

@@ -8,21 +8,19 @@
 
 #include "http_session.h"
 #include "listener.h"
-
-using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
-namespace http = boost::beast::http;    // from <boost/beast/http.hpp>
+#include "common.h"
 
 // Accepts incoming connections and launches the sessions
 listener::listener(
-  boost::shared_ptr<boost::asio::io_context> ioc,
+  boost::shared_ptr<web_service_context> ctx,
   tcp::endpoint endpoint,
   std::function<void(boost::system::error_code, char const*)> error_handler,
   const std::map<std::string, RouteHandler>& route_handlers)
-  : acceptor_(*ioc.get())
-  , socket_(*ioc.get())
+  : acceptor_(*ctx->get_ioc().get())
+  , socket_(*ctx->get_ioc().get())
   , error_handler_(error_handler)
   , route_handlers_(route_handlers)
-  , ioc_(ioc)
+  , ctx_(ctx)
 {
   boost::system::error_code ec;
 
@@ -83,7 +81,7 @@ listener::on_accept(boost::system::error_code ec)
   {
     // Create the session and run it
     std::make_shared<http_session>(
-      ioc_,
+      ctx_,
       std::move(socket_),
       error_handler_,
       route_handlers_)->run();

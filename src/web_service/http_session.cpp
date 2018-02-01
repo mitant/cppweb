@@ -8,14 +8,14 @@
 #include "http_session.h"
 
 http_session::http_session(
-  const boost::shared_ptr<boost::asio::io_context>& ioc,
+  const boost::shared_ptr<web_service_context>& ctx,
   tcp::socket socket,
   std::function<void(boost::system::error_code, char const *)> error_handler,
   const std::map<std::string, RouteHandler> &route_handlers)
   : socket_(std::move(socket)), error_handler_(error_handler), route_handlers_(route_handlers), strand_(socket_.get_executor()), timer_(socket_.get_executor().context(),
   (std::chrono::steady_clock::time_point::max)()),
   queue_(*this),
-  ioc_(ioc)
+  ctx_(ctx)
 {
 }
 
@@ -146,7 +146,7 @@ template <
   if (iter != route_handlers_.end())
   {
     std::string s = req.body();
-    return send(iter->second(ioc_, queryParams, s));
+    return send(iter->second(ctx_, queryParams, s));
   }
 
   return send(http_error_handlers::not_found(req.target()));
