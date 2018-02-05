@@ -20,7 +20,6 @@ RUN ./b2 install --prefix=/usr/local/Cellar/boost/1.66.0 threading=multi link=st
 COPY src/web_service/Makefile /usr/src/web_service/
 COPY src/web_service/*.cpp /usr/src/web_service/
 COPY src/web_service/*.h /usr/src/web_service/
-COPY src/web_service/*.hpp /usr/src/web_service/
 
 WORKDIR /usr/src/web_service
 RUN make
