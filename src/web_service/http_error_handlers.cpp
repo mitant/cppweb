@@ -29,4 +29,13 @@ namespace http_error_handlers {
 		res.prepare_payload();
 		return res;
 	}
+
+  http::response<http::string_body> unauthorized() {
+		http::response<http::string_body> res{ http::status::unauthorized, HTTP_11 };
+		res.set(http::field::server, HTTP_SERVER_VERSION);
+		res.set(http::field::content_type, "text/html");
+		res.body() = "Unauthorized.";
+		res.prepare_payload();
+		return res;
+	}
 }

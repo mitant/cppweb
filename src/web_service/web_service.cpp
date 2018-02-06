@@ -51,7 +51,11 @@ void init_logging(const std::string& log_name)
 }
 }
 
-web_service::web_service(boost::shared_ptr<web_service_context> ctx, const std::string &ip_address, unsigned short port, const std::string& log_name)
+web_service::web_service(
+  boost::shared_ptr<web_service_context> ctx,
+  const std::string &ip_address, 
+  unsigned short port,
+  const std::string& log_name)
     : port_(port),
       ip_address_(ip_address),
       log_name_(log_name),

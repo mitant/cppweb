@@ -5,6 +5,8 @@
 #include "http_error_handlers.h"
 #include "http_path.h"
 
+#include <iostream>
+
 #include "http_session.h"
 
 http_session::http_session(
@@ -130,6 +132,17 @@ template <
     Send &&send)
 {
   BOOST_LOG_TRIVIAL(info) << req.method() << "\t" << req.target().to_string();
+
+  auto auth_it = req.base().find(http::field::authorization);
+  std::string auth_header;
+
+  if (auth_it != req.base().end()) {
+    auth_header = auth_it->value().to_string();
+  }
+
+  if (!ctx_->get_authorization()->is_authorized(auth_header)) {
+    return send(http_error_handlers::unauthorized());
+  }
 
   // Make sure we can handle the method
   if (req.method() != http::verb::get &&

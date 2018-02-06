@@ -23,7 +23,9 @@ FILES= \
 	http_auth_client.cpp \
 	root_certificates.cpp \
 	routes.cpp \
-	main.cpp
+	main.cpp \
+  authorization_api.cpp \
+  authorization_dummy.cpp
 
 web_service.exe: $(FILES)
 	$(CXX) $(CPPFLAGS) $(INCLUDES) $(FILES) /link $(LIBS) /SUBSYSTEM:console /out:web_service.exe

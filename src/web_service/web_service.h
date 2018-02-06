@@ -2,6 +2,7 @@
 
 #include <string>
 #include <chrono>
+#include "authorization.h"
 
 #include "common.h"
 
@@ -14,7 +15,10 @@ class web_service : public std::enable_shared_from_this<web_service>
   std::chrono::system_clock::time_point start_time_;
 
 public:
-  web_service(boost::shared_ptr<web_service_context> ctx, const std::string &ip_address, unsigned short port, const std::string &log_name);
+  web_service(boost::shared_ptr<web_service_context> ctx,
+              const std::string &ip_address,
+              unsigned short port,
+              const std::string &log_name);
 
   void run();
 };

@@ -26,7 +26,7 @@ http::response<http::string_body> api_client_handler(const boost::shared_ptr<web
   auto const port = "443";
   auto const api_key = "somehash";
   auto const target = "/mitant/cppweb/master/README.md";
-  std::string auth_header = "";
+  std::string auth_header;
   auth_header += api_key;
 
   http_auth_client client(ctx, host, port, auth_header);

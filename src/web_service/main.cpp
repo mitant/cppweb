@@ -7,6 +7,7 @@
 #include <thread>
 
 #include "common.h"
+#include "authorization_api.h"
 #include "web_service.h"
 
 int main()
@@ -22,7 +23,10 @@ int main()
   unsigned short port = static_cast<unsigned short>(std::atoi(std::getenv("PORT")));
   int threads = std::max<int>(1, std::atoi(std::getenv("THREADS")));
 
-  boost::shared_ptr<web_service_context> ctx = boost::make_shared<web_service_context>(threads);
+  std::unordered_set<std::string> allowed_keys;
+  allowed_keys.insert("SampleKey");
+  boost::shared_ptr<authorization_api> auth = boost::make_shared<authorization_api>(allowed_keys);
+  boost::shared_ptr<web_service_context> ctx = boost::make_shared<web_service_context>(threads, auth);
 
   std::make_shared<web_service>(
       ctx,
